@@ -14,6 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -82,7 +83,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
         // and move the map's camera to the same location.
         LatLng sydney = new LatLng(-33.852, 151.211);
         googleMap.addMarker(new MarkerOptions().position(sydney)
-                .title("Marker in Sydney"));
+                .title("Marker in Sydney")).setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
         // Set a listener for marker click.
