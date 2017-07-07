@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Andrei Churkin"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/textView9"
         android:layout_alignLeft="@+id/textView10"
         android:layout_alignStart="@+id/textView10" />
@@ -63,7 +63,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Krupa Contractor"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="11dp"
+        android:layout_below="@+id/textView11"
         android:layout_alignLeft="@+id/textView11"
         android:layout_alignStart="@+id/textView11" />
 
