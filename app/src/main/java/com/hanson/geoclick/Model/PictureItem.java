@@ -11,7 +11,7 @@ public class PictureItem {
     private String latitude;
     private String longitude;
     private byte[] thumbnail;
-    private byte[] mainImg;
+    private String mainImg;
 
     public int get_id(){ return id; }
     public String get_country(){return country;}
@@ -19,10 +19,10 @@ public class PictureItem {
     public String get_latitude(){return latitude;}
     public String get_longitude(){return longitude;}
     public byte[] get_thumbnail(){return thumbnail;}
-    public byte[] get_mainImg(){return mainImg;}
+    public String get_mainImg(){return mainImg;}
 
     public PictureItem(int id, String country, String city, String lat, String lon,
-                     byte[] thumbnail, byte[] mainImg) {
+                     byte[] thumbnail, String mainImg) {
         this.id = id;
         this.country = country;
         this.city = city;

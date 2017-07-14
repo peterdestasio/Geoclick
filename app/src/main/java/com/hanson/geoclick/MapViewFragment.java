@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.hanson.geoclick.Helper.DBHelper;
+import com.hanson.geoclick.Helper.ImageHelper;
 import com.hanson.geoclick.Model.PictureItem;
 
 import java.util.ArrayList;
@@ -26,9 +27,10 @@ import java.util.ArrayList;
 
 public class MapViewFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
+    ImageHelper imgeHelper = new ImageHelper();
     ArrayList<LatLng> samplearray = new ArrayList<>();
 
-
+    ArrayList<PictureItem> PicList;
 
     public MapViewFragment() {
         // Required empty public constructor
@@ -63,7 +65,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
 
         //Connect with databases
         DBHelper dbHelper = new DBHelper(this.getContext(), "Picture.db", null, 1);
-        ArrayList<PictureItem> PicList = dbHelper.recipes_SelectAll();
+        PicList = dbHelper.recipes_SelectAll();
 
        for (int i=0; i < PicList.size(); i++)
        {
@@ -75,19 +77,30 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
     //Method that handle the position on the map
     public void onMapReady(GoogleMap googleMap) {
 
-        for(int i=0;i<samplearray.size();i++){
-            googleMap.addMarker(new MarkerOptions().position(samplearray.get(i)).title("bla"));
+//        for(int i=0;i<samplearray.size();i++){
+//            googleMap.addMarker(new MarkerOptions().position(samplearray.get(i)).title("bla"));
+//        }
+        for(int i=0;i<PicList.size();i++){
+            LatLng place = new LatLng(Double.valueOf(PicList.get(i).get_latitude()),Double.valueOf(PicList.get(i).get_longitude()));
+
+            googleMap.addMarker(new MarkerOptions().position(place)
+                    .title("Sydney")).setIcon(BitmapDescriptorFactory.fromBitmap(imgeHelper.getBitmapFromByteArray(PicList.get(i).get_thumbnail())));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(place));
+
+            // Set a listener for marker click.
+            googleMap.setOnMarkerClickListener(this);
         }
 
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
-        LatLng sydney = new LatLng(-33.852, 151.211);
-        googleMap.addMarker(new MarkerOptions().position(sydney)
-                .title("Marker in Sydney")).setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
-        // Set a listener for marker click.
-        googleMap.setOnMarkerClickListener(this);
+        //LatLng sydney = new LatLng(-33.852, 151.211);
+//        LatLng sydney = new LatLng(-33.852, 151.211);
+//        googleMap.addMarker(new MarkerOptions().position(sydney)
+//                .title("Sydney")).setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//
+//        // Set a listener for marker click.
+//        googleMap.setOnMarkerClickListener(this);
     }
 
     /** Called when the user clicks a marker. */
