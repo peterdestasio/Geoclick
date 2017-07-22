@@ -1,6 +1,7 @@
 package com.hanson.geoclick;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         viewHolder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"Image",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context,"Image",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, CItyGalleryActivity.class);
+                context.startActivity(intent);
             }
         });
     }
