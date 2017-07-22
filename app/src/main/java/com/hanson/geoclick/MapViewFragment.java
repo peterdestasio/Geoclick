@@ -85,11 +85,14 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
 
             googleMap.addMarker(new MarkerOptions().position(place)
                     .title("Sydney")).setIcon(BitmapDescriptorFactory.fromBitmap(imgeHelper.getBitmapFromByteArray(PicList.get(i).get_thumbnail())));
+
+            //bitmapdescriptiorfacory.fromFile(PicList.get(i).get_mainImg()
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(place));
 
             // Set a listener for marker click.
             googleMap.setOnMarkerClickListener(this);
         }
+
 
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.

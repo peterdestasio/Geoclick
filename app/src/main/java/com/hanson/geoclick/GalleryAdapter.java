@@ -32,7 +32,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(GalleryAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(GalleryAdapter.ViewHolder viewHolder, final int i) {
         viewHolder.title.setText(galleryList.get(i).getImage_title());
         viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         viewHolder.img.setImageResource((galleryList.get(i).getImage_ID()));
@@ -40,11 +40,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         viewHolder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(context,"Image",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context,"Title is: " + galleryList.get(i).getImage_title(),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, CItyGalleryActivity.class);
                 context.startActivity(intent);
             }
         });
+
+
     }
 
     @Override
