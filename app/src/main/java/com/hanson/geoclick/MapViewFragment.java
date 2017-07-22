@@ -1,6 +1,7 @@
 package com.hanson.geoclick;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -77,20 +78,27 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
     //Method that handle the position on the map
     public void onMapReady(GoogleMap googleMap) {
 
-//        for(int i=0;i<samplearray.size();i++){
-//            googleMap.addMarker(new MarkerOptions().position(samplearray.get(i)).title("bla"));
-//        }
-        for(int i=0;i<PicList.size();i++){
+
+        for(int i=0;i<PicList.size();i++)
+        {
             LatLng place = new LatLng(Double.valueOf(PicList.get(i).get_latitude()),Double.valueOf(PicList.get(i).get_longitude()));
 
             googleMap.addMarker(new MarkerOptions().position(place)
-                    .title("Sydney")).setIcon(BitmapDescriptorFactory.fromBitmap(imgeHelper.getBitmapFromByteArray(PicList.get(i).get_thumbnail())));
+                    .title(PicList.get(i).get_city())).setIcon(BitmapDescriptorFactory.fromBitmap(imgeHelper.getBitmapFromByteArray(PicList.get(i).get_thumbnail())));
 
             //bitmapdescriptiorfacory.fromFile(PicList.get(i).get_mainImg()
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(place));
 
             // Set a listener for marker click.
             googleMap.setOnMarkerClickListener(this);
+            googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(Marker marker) {
+                    Intent intent = new Intent(getContext(), CItyGalleryActivity.class);
+                    startActivity(intent);
+
+                }
+            });
         }
 
 
@@ -113,6 +121,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
         // Retrieve the data from the marker.
         Integer clickCount = (Integer) marker.getTag();
         Log.e("click","clack");
+
+
+        /*
         // Check if a click count was set, then display the click count.
         if (clickCount != null) {
             clickCount = clickCount + 1;
@@ -124,6 +135,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
 
 
         }
+        */
 
         // Return false to indicate that we have not consumed the event and that we wish
         // for the default behavior to occur (which is for the camera to move such that the
