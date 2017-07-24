@@ -1,20 +1,13 @@
 package com.hanson.geoclick;
 
-import android.content.Context;
-import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-
-public class GalleryFragment extends Fragment {
-
+public class CItyGalleryActivity extends AppCompatActivity {
     private final String image_titles[] = {
             "Img1",
             "Img2",
@@ -38,32 +31,19 @@ public class GalleryFragment extends Fragment {
 
     };
 
-
-    public GalleryFragment() {
-        // Required empty public constructor
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.activity_city_gallery);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_gallery, container, false);
-
-        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.imagegallery);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.imagegallery);
         recyclerView.setHasFixedSize(true);
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity().getApplicationContext(),2);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
         recyclerView.setLayoutManager(layoutManager);
         ArrayList<CreateList> createLists = prepareData();
-        GalleryAdapter adapter = new GalleryAdapter(getActivity().getApplicationContext(), createLists);
+        GalleryAdapter adapter = new GalleryAdapter(getApplicationContext(), createLists);
         recyclerView.setAdapter(adapter);
-
-        return view;
     }
 
     private ArrayList<CreateList> prepareData(){
@@ -77,7 +57,5 @@ public class GalleryFragment extends Fragment {
         }
         return theimage;
     }
+
 }
-
-
-

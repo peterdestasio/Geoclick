@@ -25,7 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //create table
         db.execSQL("CREATE TABLE Picture( _id INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "country TEXT, city TEXT, latitude TEXT, longitude TEXT,"
-                + "thumbnail BLOB, mainImg BLOB);");
+                + "thumbnail BLOB, mainImg TEXT);");
     }
 
     @Override
@@ -34,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void Picture_Insert(String country, String city, String latitude, String longitude,
-                               byte[] thumbnail, byte[] mainImg) {
+                               byte[] thumbnail, String mainImg) {
 
         // open read and write database
         SQLiteDatabase db = getWritableDatabase();
@@ -47,7 +47,7 @@ public class DBHelper extends SQLiteOpenHelper {
         p.bindString(4, latitude);
         p.bindString(5, longitude);
         p.bindBlob(6, thumbnail);
-        p.bindBlob(7, mainImg);
+        p.bindString(7, mainImg);
         p.execute();
         db.close();
         Log.d("Database :", "INSERT Complate!");
@@ -70,7 +70,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         cursor.getString(3),
                         cursor.getString(4),
                         cursor.getBlob(5),
-                        cursor.getBlob(6)
+                        cursor.getString(6)
                 ));
             }
         }

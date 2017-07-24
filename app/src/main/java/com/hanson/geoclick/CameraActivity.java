@@ -48,6 +48,7 @@ public class CameraActivity extends AppCompatActivity {
 
     //helper
     ImageHelper imageHelper;
+    Bitmap icon;
 
     //Variable of Camera
     private static final int PICK_FROM_CAMERA = 1;
@@ -100,17 +101,20 @@ public class CameraActivity extends AppCompatActivity {
                     Bitmap thBitmap = d.getBitmap();
                     //Bitmap thBitmap = imageHelper.getThubmail(bitmap);
                     //byte[] makeMainImg = imageHelper.getByteArrayFromBitmap(bitmap);
-                    byte[] makeThumbnail = imageHelper.getByteArrayFromBitmap(thBitmap);
+                    byte[] makeThumbnail = imageHelper.getByteArrayFromBitmap(icon);
 
-                   //FIXME: 2017-07-07
+
                     dbHelper.Picture_Insert(country.getText().toString(), city.getText().toString(),
-                            lat.getText().toString(),lon.getText().toString(), makeThumbnail, makeThumbnail);
+                            lat.getText().toString(),lon.getText().toString(), makeThumbnail, mCurrentPhotoPath);
+                    Toast.makeText(v.getContext(), "Completed saving picture ", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
                     Toast.makeText(v.getContext(), "Please, pick your picture!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                finish();
             }
         });
 
@@ -199,9 +203,10 @@ public class CameraActivity extends AppCompatActivity {
             //from camera
             if (requestCode == PICK_FROM_CAMERA) {
 
-                Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
-                // setPic(); //size control function
-                photoImageView.setImageBitmap(bitmap);
+                //Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+                setPic(); //size control function
+                setIcon();
+                //photoImageView.setImageBitmap(bitmap);
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                         requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -209,9 +214,13 @@ public class CameraActivity extends AppCompatActivity {
                     }
                     return;
                 }
+
                 //When took a picture, just one time It need Geo location that is taken picture location.
                 locationManager.requestSingleUpdate( "gps", locationListener, null );
             }
+        }
+        else if (resultCode == RESULT_CANCELED) {
+            finish();
         }
     }
 
@@ -263,6 +272,33 @@ public class CameraActivity extends AppCompatActivity {
         photoImageView.setImageBitmap(bitmap);
     }
 
+    private void setIcon(){
+        //Get the dimensions of the View
+        int targetW = 70;//photoImageView.getDrawable().getIntrinsicWidth();
+        int targetH = 70; //.getDrawable().getIntrinsicHeight();
+
+
+        //Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        //Determine how much to scale down the image
+        int scaleFactor = 1;
+        if ((targetW > 0) || (targetH > 0)) {
+            scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+        }
+        //Decode the image file into a bitmapsized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        icon = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         switch (item.getItemId()) {
@@ -274,3 +310,6 @@ public class CameraActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+
+//test
