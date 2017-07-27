@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Pyosnag on 2017. 7. 22..
@@ -20,7 +21,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     private ArrayList<CreateList> galleryList;
     private Context context;
     Intent shareIntent;
-    String shareTest = "Test Post Text";
+    String shareTest = "Geoclick App. ";
 
     public GalleryAdapter(Context context, ArrayList<CreateList> galleryList) {
         this.galleryList = galleryList;
@@ -50,7 +51,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             }
         });
 
-
 //         sharing to contacts if double click
         viewHolder.img.setOnClickListener(new DoubleClickListener() {
 
@@ -61,19 +61,18 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
             @Override
             public void onDoubleClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+
                 Toast.makeText(context,"Double Click!",Toast.LENGTH_SHORT).show();
                 shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.setType("text/plain");
+                shareIntent.setType("image/png");
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My App");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, shareTest);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareTest + year);
                 context.startActivity(Intent.createChooser(shareIntent,"Share Via"));
 
             }
         });
-
-
-
-
     }
 
     @Override
