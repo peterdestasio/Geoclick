@@ -19,6 +19,8 @@ import java.util.ArrayList;
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
     private ArrayList<CreateList> galleryList;
     private Context context;
+    Intent shareIntent;
+    String shareTest = "Test Post Text";
 
     public GalleryAdapter(Context context, ArrayList<CreateList> galleryList) {
         this.galleryList = galleryList;
@@ -37,14 +39,39 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         viewHolder.img.setImageResource((galleryList.get(i).getImage_ID()));
 
-        viewHolder.img.setOnClickListener(new View.OnClickListener() {
+
+        viewHolder.img.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
-                //Toast.makeText(context,"Title is: " + galleryList.get(i).getImage_title(),Toast.LENGTH_SHORT).show();
+            public boolean onLongClick(View v) {
+//                Toast.makeText(context,"Title is: " + galleryList.get(i).getImage_title(),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, CItyGalleryActivity.class);
                 context.startActivity(intent);
+                return false;
             }
         });
+
+
+//         sharing to contacts if double click
+        viewHolder.img.setOnClickListener(new DoubleClickListener() {
+
+            @Override
+            public void onSingleClick(View v) {
+
+            }
+
+            @Override
+            public void onDoubleClick(View v) {
+                Toast.makeText(context,"Double Click!",Toast.LENGTH_SHORT).show();
+                shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My App");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareTest);
+                context.startActivity(Intent.createChooser(shareIntent,"Share Via"));
+
+            }
+        });
+
+
 
 
     }
