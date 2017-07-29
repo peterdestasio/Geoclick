@@ -1,4 +1,4 @@
-package com.hanson.geoclick;
+package com.hanson.geoclick.Adapters;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.hanson.geoclick.R;
+
 public class MyImageAdapter extends PagerAdapter {
 
     Context mContext;
@@ -18,7 +20,7 @@ public class MyImageAdapter extends PagerAdapter {
             R.drawable.micky,R.drawable.lion,R.drawable.fire,
     };
 
-    MyImageAdapter(Context context) {
+    public MyImageAdapter(Context context) {
         this.mContext = context;
     }
 

@@ -51,7 +51,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".MyImageAdapter" />
+        <activity android:name=".Adapters.MyImageAdapter" />
         <activity android:name=".ImageSlider" />
         <activity
             android:name=".SplashScreen"

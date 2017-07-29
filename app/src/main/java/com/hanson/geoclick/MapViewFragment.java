@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,6 +33,8 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
     ArrayList<LatLng> samplearray = new ArrayList<>();
 
     ArrayList<PictureItem> PicList;
+
+    ArrayList<PictureItem> picCities;
 
     public MapViewFragment() {
         // Required empty public constructor
@@ -66,7 +69,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
 
         //Connect with databases
         DBHelper dbHelper = new DBHelper(this.getContext(), "Picture.db", null, 1);
-        PicList = dbHelper.recipes_SelectAll();
+        PicList = dbHelper.pictures_SelectAll();
 
        for (int i=0; i < PicList.size(); i++)
        {
@@ -76,7 +79,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
     }
 
     //Method that handle the position on the map
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
 
 
         for(int i=0;i<PicList.size();i++)
@@ -86,14 +89,24 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
             googleMap.addMarker(new MarkerOptions().position(place)
                     .title(PicList.get(i).get_city())).setIcon(BitmapDescriptorFactory.fromBitmap(imgeHelper.getBitmapFromByteArray(PicList.get(i).get_thumbnail())));
 
+
+            ///try!!!
             //bitmapdescriptiorfacory.fromFile(PicList.get(i).get_mainImg()
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(place));
 
             // Set a listener for marker click.
             googleMap.setOnMarkerClickListener(this);
+            //TO FIX
             googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                 @Override
                 public void onInfoWindowClick(Marker marker) {
+
+                    DBHelper dbHelper = new DBHelper(getContext(), "Picture.db", null, 1);
+                    picCities = dbHelper.selectPicFromCity(marker.getTitle());
+
+                   // Toast.makeText(getContext(), "Selected: " + picCities.get(0).get_city().toString(),
+                    //        Toast.LENGTH_SHORT).show();
+                    //send data to citygallery activity
                     Intent intent = new Intent(getContext(), CItyGalleryActivity.class);
                     startActivity(intent);
 

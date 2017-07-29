@@ -4,6 +4,7 @@ package com.hanson.geoclick;
  * Created by Pyosnag on 2017. 7. 22..
  */
 
+
 public class CreateList {
 
     private String image_title;

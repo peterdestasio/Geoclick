@@ -1,4 +1,4 @@
-package com.hanson.geoclick;
+package com.hanson.geoclick.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,36 +8,51 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.hanson.geoclick.Helper.ImageHelper;
+import com.hanson.geoclick.Model.CityItem;
+import com.hanson.geoclick.R;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Created by Pyosnag on 2017. 7. 22..
  */
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
-    private ArrayList<CreateList> galleryList;
+    //private ArrayList<CreateList> galleryList;
+    private  ArrayList<CityItem> cityList;
+    private ImageHelper imageHelper = new ImageHelper();
+
     private Context context;
     Intent shareIntent;
     String shareTest = "Geoclick App. ";
-
+    /*
     public GalleryAdapter(Context context, ArrayList<CreateList> galleryList) {
         this.galleryList = galleryList;
         this.context = context;
     }
+    */
 
+    public GalleryAdapter(Context context, ArrayList<CityItem> cityList){
+        this.cityList = cityList;
+        this.context = context;
+    }
+
+
+    //The viewHolder holds Views in a cache, when created, and reuses Views from this cache as needed.
     @Override
     public GalleryAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cell_layout, viewGroup, false);
         return new ViewHolder(view);
     }
-
+    /*
+    //TO FIXXXX
     @Override
     public void onBindViewHolder(GalleryAdapter.ViewHolder viewHolder, final int i) {
         viewHolder.title.setText(galleryList.get(i).getImage_title());
         viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        //viewHolder.img.setImageResource(Integer.parseInt((galleryList.get(i).getImage_ID())));
         viewHolder.img.setImageResource((galleryList.get(i).getImage_ID()));
 
 
@@ -75,9 +90,24 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         });
     }
 
+    */
+
+    @Override
+    public void onBindViewHolder(GalleryAdapter.ViewHolder viewHolder, int i) {
+        viewHolder.title.setText(cityList.get(i).getName());
+        //viewHolder.title.setText(galleryList.get(i).getImage_title());
+        viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        //viewHolder.img.setImageResource(cityList.get(i).getImage_id());
+        //viewHolder.img.setImageBitmap(cityList.get(i).getThumbnail());
+
+        viewHolder.img.setImageBitmap(imageHelper.getBitmapFromByteArray(cityList.get(i).getThumbnail()));
+    }
+
+    //TO FIXXXX i need thumbnail and image
+
     @Override
     public int getItemCount() {
-        return galleryList.size();
+        return cityList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

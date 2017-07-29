@@ -267,6 +267,7 @@ public class CameraActivity extends AppCompatActivity {
         bmOptions.inSampleSize = scaleFactor;
         bmOptions.inPurgeable = true;
 
+        //try this!!!!
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         //Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
         photoImageView.setImageBitmap(bitmap);

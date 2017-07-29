@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import com.hanson.geoclick.Model.CityItem;
 import com.hanson.geoclick.Model.PictureItem;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.d("Database :", "INSERT Complate!");
     }
 
-    public ArrayList<PictureItem> recipes_SelectAll()
+    public ArrayList<PictureItem> pictures_SelectAll()
     {
         // Open available reading database
         SQLiteDatabase db = getReadableDatabase();
@@ -79,4 +80,56 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return allPictures;
     }
+
+
+    //return a set of city based on city name
+    public ArrayList<PictureItem> selectPicFromCity(String cityName)
+    {
+        // Open available reading database
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<PictureItem> picbycities = new ArrayList<>();
+        // Get all recipes data
+        Cursor cursor = db.rawQuery("SELECT * FROM Picture WHERE city = '" + cityName + "'", null);
+        if (cursor != null)
+        {
+            while (cursor.moveToNext()) {
+                picbycities.add(new PictureItem(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getBlob(5),
+                        cursor.getString(6)
+                ));
+            }
+        }
+        cursor.close();
+        db.close();
+
+        return picbycities;
+    }
+
+    public ArrayList<CityItem> selectPicGroupByCity()
+    {
+        // Open available reading database
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<CityItem> picbycities = new ArrayList<>();
+        // Get all recipes data
+        Cursor cursor = db.rawQuery("SELECT city, thumbnail FROM Picture GROUP BY city HAVING max(_id)", null);
+        if (cursor != null)
+        {
+            while (cursor.moveToNext()) {
+                picbycities.add(new CityItem(
+                        cursor.getString(0),
+                        cursor.getBlob(1)
+                ));
+            }
+        }
+        cursor.close();
+        db.close();
+
+        return picbycities;
+    }
+
 }
