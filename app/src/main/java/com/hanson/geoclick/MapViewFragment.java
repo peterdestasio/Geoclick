@@ -30,7 +30,6 @@ import java.util.ArrayList;
 public class MapViewFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     ImageHelper imgeHelper = new ImageHelper();
-    ArrayList<LatLng> samplearray = new ArrayList<>();
 
     ArrayList<PictureItem> PicList;
 
@@ -51,13 +50,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
         // when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        //test
-        LatLng f = new LatLng(51.507,0.127);
-        LatLng g = new LatLng(53.507,0.127);
-
-        samplearray.add(f);
-        samplearray.add(g);
 
 
         return view;
@@ -104,27 +96,20 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
                     DBHelper dbHelper = new DBHelper(getContext(), "Picture.db", null, 1);
                     picCities = dbHelper.selectPicFromCity(marker.getTitle());
 
-                   // Toast.makeText(getContext(), "Selected: " + picCities.get(0).get_city().toString(),
-                    //        Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "Selected: " + picCities.get(0).get_city().toString(),
+                    //       Toast.LENGTH_SHORT).show();
                     //send data to citygallery activity
                     Intent intent = new Intent(getContext(), CItyGalleryActivity.class);
+                    intent.putExtra("cityChoise",picCities.get(0).get_city().toString());
                     startActivity(intent);
+
+                    dbHelper.close();
 
                 }
             });
         }
 
 
-        // Add a marker in Sydney, Australia,
-        // and move the map's camera to the same location.
-        //LatLng sydney = new LatLng(-33.852, 151.211);
-//        LatLng sydney = new LatLng(-33.852, 151.211);
-//        googleMap.addMarker(new MarkerOptions().position(sydney)
-//                .title("Sydney")).setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
-//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-//
-//        // Set a listener for marker click.
-//        googleMap.setOnMarkerClickListener(this);
     }
 
     /** Called when the user clicks a marker. */

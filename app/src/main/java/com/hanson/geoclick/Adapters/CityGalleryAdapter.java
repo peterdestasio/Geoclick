@@ -1,14 +1,18 @@
 package com.hanson.geoclick.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hanson.geoclick.Helper.ImageHelper;
+import com.hanson.geoclick.ImageSlider;
 import com.hanson.geoclick.Model.PictureItem;
 import com.hanson.geoclick.R;
 
@@ -25,12 +29,6 @@ public class CityGalleryAdapter extends RecyclerView.Adapter<CityGalleryAdapter.
 
     private Context context;
 
-    /*
-    public GalleryAdapter(Context context, ArrayList<CreateList> galleryList) {
-        this.galleryList = galleryList;
-        this.context = context;
-    }
-    */
 
     public CityGalleryAdapter(Context context, ArrayList<PictureItem> pictureItems){
         this.pictureItems = pictureItems;
@@ -48,15 +46,22 @@ public class CityGalleryAdapter extends RecyclerView.Adapter<CityGalleryAdapter.
 
 
     @Override
-    public void onBindViewHolder(CityGalleryAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(CityGalleryAdapter.ViewHolder viewHolder, final int i) {
         viewHolder.title.setText("");
-        //viewHolder.title.setText(pictureItems.get(i).get_city());
-        //viewHolder.title.setText(galleryList.get(i).getImage_title());
         viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        //viewHolder.img.setImageResource(cityList.get(i).getImage_id());
-        //viewHolder.img.setImageBitmap(cityList.get(i).getThumbnail());
-
         viewHolder.img.setImageBitmap(imageHelper.getBitmapFromByteArray(pictureItems.get(i).get_thumbnail()));
+
+        viewHolder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(context,String.valueOf(pictureItems.get(i).get_id()),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, ImageSlider.class);
+                intent.putExtra("idPic",i); //send the id of the image clicked
+                Log.e("Chouse", String.valueOf(i));
+                intent.putExtra("cityChosen", pictureItems.get(i).get_city()); //send the city chosen
+                context.startActivity(intent);
+            }
+        });
     }
 
 

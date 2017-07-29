@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.hanson.geoclick.CItyGalleryActivity;
 import com.hanson.geoclick.Helper.ImageHelper;
 import com.hanson.geoclick.Model.CityItem;
 import com.hanson.geoclick.R;
@@ -20,19 +22,14 @@ import java.util.ArrayList;
  */
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
-    //private ArrayList<CreateList> galleryList;
+
     private  ArrayList<CityItem> cityList;
     private ImageHelper imageHelper = new ImageHelper();
 
     private Context context;
     Intent shareIntent;
     String shareTest = "Geoclick App. ";
-    /*
-    public GalleryAdapter(Context context, ArrayList<CreateList> galleryList) {
-        this.galleryList = galleryList;
-        this.context = context;
-    }
-    */
+
 
     public GalleryAdapter(Context context, ArrayList<CityItem> cityList){
         this.cityList = cityList;
@@ -47,7 +44,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         return new ViewHolder(view);
     }
     /*
-    //TO FIXXXX
+    //TO FIXXXX ANDREIIII!!!!! WTF???
     @Override
     public void onBindViewHolder(GalleryAdapter.ViewHolder viewHolder, final int i) {
         viewHolder.title.setText(galleryList.get(i).getImage_title());
@@ -93,17 +90,22 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     */
 
     @Override
-    public void onBindViewHolder(GalleryAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(final GalleryAdapter.ViewHolder viewHolder, final int i) {
         viewHolder.title.setText(cityList.get(i).getName());
-        //viewHolder.title.setText(galleryList.get(i).getImage_title());
         viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        //viewHolder.img.setImageResource(cityList.get(i).getImage_id());
-        //viewHolder.img.setImageBitmap(cityList.get(i).getThumbnail());
-
         viewHolder.img.setImageBitmap(imageHelper.getBitmapFromByteArray(cityList.get(i).getThumbnail()));
+
+        viewHolder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(context,cityList.get(i).getName(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, CItyGalleryActivity.class);
+                intent.putExtra("cityChoise",cityList.get(i).getName().toString());
+                context.startActivity(intent);
+            }
+        });
     }
 
-    //TO FIXXXX i need thumbnail and image
 
     @Override
     public int getItemCount() {
