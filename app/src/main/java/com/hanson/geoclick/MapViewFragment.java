@@ -27,6 +27,11 @@ import com.hanson.geoclick.Model.PictureItem;
 import java.util.ArrayList;
 
 
+/*
+This Fragment show a list of pictures on a map based on the position in which the pictures were taken
+It use Google Maps API
+ */
+
 public class MapViewFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     ImageHelper imgeHelper = new ImageHelper();
@@ -43,7 +48,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         final View view = inflater.inflate(R.layout.fragment_map_view, container, false);
 
         // Get the SupportMapFragment and request notification
@@ -88,7 +92,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
 
             // Set a listener for marker click.
             googleMap.setOnMarkerClickListener(this);
-            //TO FIX
+            //this listener is listening the events that you click on the title of the map
             googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                 @Override
                 public void onInfoWindowClick(Marker marker) {
@@ -96,8 +100,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
                     DBHelper dbHelper = new DBHelper(getContext(), "Picture.db", null, 1);
                     picCities = dbHelper.selectPicFromCity(marker.getTitle());
 
-                    //Toast.makeText(getContext(), "Selected: " + picCities.get(0).get_city().toString(),
-                    //       Toast.LENGTH_SHORT).show();
+
                     //send data to citygallery activity
                     Intent intent = new Intent(getContext(), CItyGalleryActivity.class);
                     intent.putExtra("cityChoise",picCities.get(0).get_city().toString());
