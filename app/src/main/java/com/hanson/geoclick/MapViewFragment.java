@@ -2,6 +2,7 @@ package com.hanson.geoclick;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -82,8 +83,10 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
         {
             LatLng place = new LatLng(Double.valueOf(PicList.get(i).get_latitude()),Double.valueOf(PicList.get(i).get_longitude()));
 
+            //Add by Miju Jang - for making small size icon
+            Bitmap smallMarker = Bitmap.createScaledBitmap(imgeHelper.getBitmapFromByteArray(PicList.get(i).get_thumbnail()), 70, 70, false);
             googleMap.addMarker(new MarkerOptions().position(place)
-                    .title(PicList.get(i).get_city())).setIcon(BitmapDescriptorFactory.fromBitmap(imgeHelper.getBitmapFromByteArray(PicList.get(i).get_thumbnail())));
+                    .title(PicList.get(i).get_city())).setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
 
 
             ///try!!!
