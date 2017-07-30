@@ -3,7 +3,9 @@ An Android application that stores and shows you a gallery of images on a map ba
 
 Cambrian @ Hanson College Project
 
-![alt text](https://github.com/peterdestasio/Geoclick/blob/master/app/src/main/res/drawable/logowithtitle.png)
+<p align="center">
+<img src="https://github.com/peterdestasio/Geoclick/blob/master/app/src/main/res/drawable/logowithtitle.png" width="300" align="center">
+</p>
 
 ## Getting Started
 1. Open Window &gt; Android SDK Manager, make sure you have these modules
