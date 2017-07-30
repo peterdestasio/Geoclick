@@ -92,7 +92,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
 
             // Set a listener for marker click.
             googleMap.setOnMarkerClickListener(this);
-            //this listener is listening the events that you click on the title of the map
+            //this listener is listening the events that you click on the title of the map marker
             googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                 @Override
                 public void onInfoWindowClick(Marker marker) {

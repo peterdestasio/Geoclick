@@ -54,6 +54,8 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.d("Database :", "INSERT Complate!");
     }
 
+
+    //Query that return all pictures
     public ArrayList<PictureItem> pictures_SelectAll()
     {
         // Open available reading database
@@ -82,7 +84,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    //return a set of city based on city name
+    // Query tha return a set of city based on city name
     public ArrayList<PictureItem> selectPicFromCity(String cityName)
     {
         // Open available reading database
@@ -110,6 +112,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return picbycities;
     }
 
+    //Query that return all pictures grouped by city
     public ArrayList<CityItem> selectPicGroupByCity()
     {
         // Open available reading database

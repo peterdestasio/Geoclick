@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 /**
  * Created by pierluigidestasio on 2017-07-29.
+ * similar to Gallery Adapter but without the title because we want only pictures
  */
 
 public class CityGalleryAdapter extends RecyclerView.Adapter<CityGalleryAdapter.ViewHolder> {
@@ -54,7 +55,6 @@ public class CityGalleryAdapter extends RecyclerView.Adapter<CityGalleryAdapter.
         viewHolder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(context,String.valueOf(pictureItems.get(i).get_id()),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, ImageSlider.class);
                 intent.putExtra("idPic",i); //send the id of the image clicked
                 Log.e("Chouse", String.valueOf(i));

@@ -20,6 +20,9 @@ import com.hanson.geoclick.R;
 
 import java.util.ArrayList;
 
+/*
+Customized adapter that extend PagerAdapter it is used by ImageSlider
+ */
 public class MyImageAdapter extends PagerAdapter {
 
     private ArrayList<PictureItem> pictureItems;
@@ -55,12 +58,31 @@ public class MyImageAdapter extends PagerAdapter {
         return pictureItems.size();
     }
 
+    /**
+     * Determines whether a page View is associated with a specific key object as
+     * returned by instantiateItem(ViewGroup, int).
+     *
+     * @param v   Page View to check for association with object
+     * @param obj Object to check for association with view
+     *
+     * @return true if view is associated with the key object object.
+     */
     @Override
     public  boolean isViewFromObject(View v,Object obj){
 
         return v == ((ImageView) obj);
     }
 
+
+    /**
+     * Create the page for the given position.
+     *
+     * @param container The containing View in which the page will be shown.
+     * @param i The page position to be instantiated.
+     *
+     * @return Returns an Object representing the new page. This does not need
+     *         to be a View, but can be some other container of the page.
+     */
     @Override
     public  Object instantiateItem(ViewGroup container, int i)
     {
@@ -71,8 +93,6 @@ public class MyImageAdapter extends PagerAdapter {
         //mImageView.setImageBitmap(imageHelper.getBitmapFromByteArray(pictureItems.get(i).get_thumbnail()));
         mImageView.setImageURI(Uri.parse(pictureItems.get(i).get_mainImg()));
         ((ViewPager)container).addView(mImageView,0);
-
-
 
         return  mImageView;
 

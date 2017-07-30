@@ -12,6 +12,12 @@ import com.hanson.geoclick.Model.PictureItem;
 
 import java.util.ArrayList;
 
+/*
+  This activity use a RecycleView to display efficiently a list of images related by cities
+  (For reference of how it works recycle view see GalleryFragment)
+  It is called by GalleryFragment and MapViewFragment
+ */
+
 public class CItyGalleryActivity extends AppCompatActivity {
 
     DBHelper dbHelper = new DBHelper(this, "Picture.db", null, 1);
