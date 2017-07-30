@@ -104,9 +104,10 @@ public class CameraActivity extends AppCompatActivity {
                     if(photoImageView.getDrawable() != null && city.getText() != "" && country.getText() != "" &&
                             lat.getText() != "" && lon.getText() != "")
                     {
-                        BitmapDrawable d = (BitmapDrawable)((ImageView) findViewById(R.id.imageView_takecam)).getDrawable();
-                        Bitmap thBitmap = d.getBitmap();
-                        byte[] makeThumbnail = imageHelper.getByteArrayFromBitmap(thBitmap);
+//                        BitmapDrawable d = (BitmapDrawable)((ImageView) findViewById(R.id.imageView_takecam)).getDrawable();
+//                        Bitmap thBitmap = d.getBitmap();
+                        setIcon();
+                        byte[] makeThumbnail = imageHelper.getByteArrayFromBitmap(icon);
 
 
                         dbHelper.Picture_Insert(country.getText().toString(), city.getText().toString(),
@@ -229,7 +230,7 @@ public class CameraActivity extends AppCompatActivity {
 
                 //Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
                 setPic(); //size control function
-                setIcon();
+
                 //photoImageView.setImageBitmap(bitmap);
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -300,8 +301,8 @@ public class CameraActivity extends AppCompatActivity {
 
     private void setIcon(){
         //Get the dimensions of the View
-        int targetW = 70;//photoImageView.getDrawable().getIntrinsicWidth();
-        int targetH = 70; //.getDrawable().getIntrinsicHeight();
+        int targetW = 200;//photoImageView.getDrawable().getIntrinsicWidth();
+        int targetH = 200; //.getDrawable().getIntrinsicHeight();
 
 
         //Get the dimensions of the bitmap
