@@ -35,7 +35,7 @@ git clone https://github.com/peterdestasio/Geoclick
 
 ## API References
 
-[Google Maps API](https://developers.google.com/maps/documentation/android-api/) for details regarding how to show image markes geolocalized on a Map.
+[Google Maps API](https://developers.google.com/maps/documentation/android-api/) for details regarding how to show image markers geolocalized on a Map.
 
 ## Authors
 
