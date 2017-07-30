@@ -68,6 +68,8 @@ public class GalleryFragment extends Fragment {
         GalleryAdapter adapter = new GalleryAdapter(getActivity().getApplicationContext(), cities);
         recyclerView.setAdapter(adapter);
 
+        dbHelper.close();
+
 
 
         return view;

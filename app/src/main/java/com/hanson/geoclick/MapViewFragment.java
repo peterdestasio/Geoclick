@@ -73,6 +73,8 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
            Log.d("Picture List : ", String.valueOf(PicList.get(i).get_id() + ", " + PicList.get(i).get_latitude()));
        }
 
+       dbHelper.close();
+
     }
 
     //Method that handle the position on the map
