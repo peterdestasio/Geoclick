@@ -23,7 +23,6 @@ RecyclerView is a modern, properly planned and more efficient improvement on the
 
 This is a handy view that acts very much like a ListView but with the advantage of allowing us to scroll quickly through large data sets. It does this by only loading the images that are currently in view at any given time. This means we can load more images without the app becoming very slow. There’s a lot more that you can do with this view and it’s used all over Google’s own apps, so check out the full explanation to using RecyclerView to find out more.
 
-The good news is that this is all we really need to create our gallery – a RecyclerView filled with images. The bad news is that the RecyclerView is a little more complicated than most other views. Because of course it is.
  */
 
 

@@ -40,6 +40,7 @@ public class MyImageAdapter extends PagerAdapter {
 
     }
 
+    //function used to inizialize the adapter with the data taken form the database
     public void create(){
         DBHelper dbHelper = new DBHelper(mContext, "Picture.db", null, 1);
 
@@ -50,8 +51,11 @@ public class MyImageAdapter extends PagerAdapter {
         choise = intent.getIntExtra("idPic", 0);
         pictureItems = dbHelper.selectPicFromCity(city);
 
+        dbHelper.close();
+
     }
 
+    //return the size of the array
     @Override
     public int getCount()
     {

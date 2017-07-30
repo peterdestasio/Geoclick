@@ -101,7 +101,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     */
 
     /*
-     *bind the ViewHolder with the data from our ArrayList of CityItem
+     * bind the ViewHolder with the data from our ArrayList of CityItem
      * find the TextView first and set the title of the city then find the ImageView and use the image thumbnail to display
       */
     @Override
