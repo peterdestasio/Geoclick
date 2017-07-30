@@ -40,7 +40,7 @@ git clone https://github.com/peterdestasio/Geoclick
 ## Authors
 
 * **Peter De Stasio** - *Team Leader* - [Personal Website](http://peterdestasio.com/)
-* **Miju Jang** - *UX Designer* - [GitHub](https://github.com/shyjoo)
+* **Miju Jang** - *UX Developer* - [GitHub](https://github.com/shyjoo)
 * **Pyosang Park** - *Developer* - [GitHub](https://github.com/parkps618)
 * **Andrei Churkin** - *Developer* - [GitHub](https://github.com/Residentcd08)
 * **Krupa Contractor** - *Developer* - [GitHub](https://github.com/krupa007)
