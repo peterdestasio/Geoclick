@@ -37,6 +37,7 @@ git clone https://github.com/peterdestasio/Geoclick
 
 [Google Maps API](https://developers.google.com/maps/documentation/android-api/) for details regarding how to show image markers geolocalized on a Map.
 
+
 ## Authors
 
 * **Peter De Stasio** - *Team Leader* - [Personal Website](http://peterdestasio.com/)
@@ -46,6 +47,9 @@ git clone https://github.com/peterdestasio/Geoclick
 * **Krupa Contractor** - *Developer* - [GitHub](https://github.com/krupa007)
 
 See also the list of [contributors](https://github.com/peterdestasio/Geoclick/graphs/contributors) who participated in this project.
+
+## License
+[GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.txt)
 
 
 
