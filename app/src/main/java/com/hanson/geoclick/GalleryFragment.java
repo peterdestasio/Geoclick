@@ -60,7 +60,7 @@ public class GalleryFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.imagegallery);
         recyclerView.setHasFixedSize(true);
         // use of a layout manager and the adapter - we used a grid Layout manager for pictures
-        // 2 is the number of the column
+        // 2 is the number of the columns
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity().getApplicationContext(),2);
         recyclerView.setLayoutManager(layoutManager);
 
