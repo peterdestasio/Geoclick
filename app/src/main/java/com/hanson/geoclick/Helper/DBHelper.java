@@ -5,8 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.graphics.Picture;
 import android.util.Log;
 
+import com.hanson.geoclick.Model.CityItem;
 import com.hanson.geoclick.Model.PictureItem;
 
 import java.util.ArrayList;
@@ -50,10 +52,23 @@ public class DBHelper extends SQLiteOpenHelper {
         p.bindString(7, mainImg);
         p.execute();
         db.close();
-        Log.d("Database :", "INSERT Complate!");
+        Log.d("Database :", "INSERT Complete!");
     }
 
-    public ArrayList<PictureItem> recipes_SelectAll()
+    public void deleteRow (int row) {
+
+
+        SQLiteDatabase db = getWritableDatabase();
+
+
+        db.execSQL("DELETE FROM Picture WHERE _id = " + row + ";");
+        db.close();
+    }
+
+
+
+    //Query that return all pictures
+    public ArrayList<PictureItem> pictures_SelectAll()
     {
         // Open available reading database
         SQLiteDatabase db = getReadableDatabase();
@@ -79,4 +94,57 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return allPictures;
     }
+
+
+    // Query tha return a set of city based on city name
+    public ArrayList<PictureItem> selectPicFromCity(String cityName)
+    {
+        // Open available reading database
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<PictureItem> picbycities = new ArrayList<>();
+        // Get all recipes data
+        Cursor cursor = db.rawQuery("SELECT * FROM Picture WHERE city = '" + cityName + "'", null);
+        if (cursor != null)
+        {
+            while (cursor.moveToNext()) {
+                picbycities.add(new PictureItem(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getBlob(5),
+                        cursor.getString(6)
+                ));
+            }
+        }
+        cursor.close();
+        db.close();
+
+        return picbycities;
+    }
+
+    //Query that return all pictures grouped by city
+    public ArrayList<CityItem> selectPicGroupByCity()
+    {
+        // Open available reading database
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<CityItem> picbycities = new ArrayList<>();
+        // Get all recipes data
+        Cursor cursor = db.rawQuery("SELECT city, thumbnail FROM Picture GROUP BY city HAVING max(_id)", null);
+        if (cursor != null)
+        {
+            while (cursor.moveToNext()) {
+                picbycities.add(new CityItem(
+                        cursor.getString(0),
+                        cursor.getBlob(1)
+                ));
+            }
+        }
+        cursor.close();
+        db.close();
+
+        return picbycities;
+    }
+
 }

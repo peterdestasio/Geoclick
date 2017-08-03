@@ -50,16 +50,10 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                //Check and ask for permissions in version Android API 23 and above.
-
 
                 Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
                 startActivity(intent);
-//                CameraFragment cameraFragment = new CameraFragment();
-//                FragmentManager manager = getSupportFragmentManager();
-//                manager.beginTransaction().replace(R.id.root_layout, cameraFragment, cameraFragment.getTag()).commit();
+
             }
         });
         //permissions

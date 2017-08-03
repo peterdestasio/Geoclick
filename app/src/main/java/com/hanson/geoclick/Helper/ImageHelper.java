@@ -71,11 +71,5 @@ public class ImageHelper {
                 bmpSource, newWidth, newHeight, true);
     }
 
-    public Bitmap getThubmail(Bitmap pBitmap){
-        int height = pBitmap.getHeight();
-        int width = pBitmap.getWidth();
 
-        Bitmap resizedImg = Bitmap.createScaledBitmap(pBitmap, (width * 90) / 90, 90, true);
-        return resizedImg;
-    }
 }

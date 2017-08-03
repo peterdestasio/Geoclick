@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -45,6 +46,12 @@ import java.util.List;
 import java.util.Locale;
 
 public class CameraActivity extends AppCompatActivity {
+    //view data
+    private static final String DATA_LAT = "Lat";
+    private static final String DATA_LON = "lon";
+    private static final String DATA_CITY = "city";
+    private static final String DATA_COUNTRY = "country";
+    private static final String DATA_PIC = "picture";
 
     //helper
     ImageHelper imageHelper;
@@ -53,8 +60,6 @@ public class CameraActivity extends AppCompatActivity {
     //Variable of Camera
     private static final int PICK_FROM_CAMERA = 1;
 
-    //Orientation
-    private int orientation;
 
     //Geo Location
     private LocationManager locationManager;
@@ -67,104 +72,119 @@ public class CameraActivity extends AppCompatActivity {
     TextView city;
     Button save;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        imageHelper = new ImageHelper();
 
-        //Show backbutton
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+            imageHelper = new ImageHelper();
 
-        photoImageView = (ImageView) findViewById(R.id.imageView_takecam);
-        lat = (TextView) findViewById(R.id.textView_lat);
-        lon = (TextView) findViewById(R.id.textView_long);
-        city = (TextView) findViewById(R.id.textView_city);
-        country = (TextView) findViewById(R.id.textView_country);
-        save = (Button) findViewById(R.id.button_save);
+            //Show backbutton
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            photoImageView = (ImageView) findViewById(R.id.imageView_takecam);
+            lat = (TextView) findViewById(R.id.textView_lat);
+            lon = (TextView) findViewById(R.id.textView_long);
+            city = (TextView) findViewById(R.id.textView_city);
+            country = (TextView) findViewById(R.id.textView_country);
+            save = (Button) findViewById(R.id.button_save);
 
-
-                //Connect with databases
-                DBHelper dbHelper = new DBHelper(getBaseContext(), "Picture.db", null, 1);
-
-                if(photoImageView.getDrawable() != null && city.getText() != "" && country.getText() != "" &&
-                        lat.getText() != "" && lon.getText() != "")
-                {
-                    BitmapDrawable d = (BitmapDrawable)((ImageView) findViewById(R.id.imageView_takecam)).getDrawable();
-                    Bitmap thBitmap = d.getBitmap();
-                    //Bitmap thBitmap = imageHelper.getThubmail(bitmap);
-                    //byte[] makeMainImg = imageHelper.getByteArrayFromBitmap(bitmap);
-                    byte[] makeThumbnail = imageHelper.getByteArrayFromBitmap(icon);
+            save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
 
-                    dbHelper.Picture_Insert(country.getText().toString(), city.getText().toString(),
-                            lat.getText().toString(),lon.getText().toString(), makeThumbnail, mCurrentPhotoPath);
-                    Toast.makeText(v.getContext(), "Completed saving picture ", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    Toast.makeText(v.getContext(), "Please, pick your picture!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                    //Connect with databases
+                    DBHelper dbHelper = new DBHelper(getBaseContext(), "Picture.db", null, 1);
 
-                finish();
-            }
-        });
+                    if(photoImageView.getDrawable() != null && city.getText() != "" && country.getText() != "" &&
+                            lat.getText() != "" && lon.getText() != "")
+                    {
+//                        BitmapDrawable d = (BitmapDrawable)((ImageView) findViewById(R.id.imageView_takecam)).getDrawable();
+//                        Bitmap thBitmap = d.getBitmap();
+                        setIcon();
+                        byte[] makeThumbnail = imageHelper.getByteArrayFromBitmap(icon);
 
-        //For Geo Location
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        locationListener = new LocationListener() {
 
-            @Override
-            public void onLocationChanged(Location location) {
-                lat.setText(String.valueOf(location.getLatitude()));
-                lon.setText(String.valueOf(location.getLongitude()));
-
-                Geocoder geocoder;
-                List<Address> addresses;
-
-                //Get current Geo location
-                geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
-
-                try{
-                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-                    if (!addresses.isEmpty()){
-                        //Get city from address
-                        city.setText(addresses.get(0).getLocality());
-                        //Get country from address
-                        country.setText(addresses.get(0).getCountryName());
+                        dbHelper.Picture_Insert(country.getText().toString(), city.getText().toString(),
+                                lat.getText().toString(),lon.getText().toString(), makeThumbnail, mCurrentPhotoPath);
+                        Toast.makeText(v.getContext(), "Completed saving picture ", Toast.LENGTH_SHORT).show();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    else
+                    {
+                        Toast.makeText(v.getContext(), "Please, pick your picture!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    finish();
                 }
-            }
+            });
 
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
+        if (savedInstanceState == null)
+        {
+            //For Geo Location
+            locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            locationListener = new LocationListener() {
 
-            }
+                @Override
+                public void onLocationChanged(Location location) {
+                    lat.setText(String.valueOf(location.getLatitude()));
+                    lon.setText(String.valueOf(location.getLongitude()));
 
-            @Override
-            public void onProviderEnabled(String provider) {
+                    Geocoder geocoder;
+                    List<Address> addresses;
 
-            }
+                    //Get current Geo location
+                    geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
 
-            @Override
-            public void onProviderDisabled(String provider) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-        };
+                    try{
+                        addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
-              doTakePhotoAction();
+                        if (!addresses.isEmpty()){
+                            //Get city from address
+                            city.setText(addresses.get(0).getLocality());
+                            //Get country from address
+                            country.setText(addresses.get(0).getCountryName());
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent);
+                }
+            };
+
+            doTakePhotoAction();
+        }
+        else {
+            mCurrentPhotoPath = savedInstanceState.getString(DATA_PIC);
+            Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+            photoImageView.setImageBitmap(bitmap);
+            lat.setText(savedInstanceState.getString(DATA_LAT));
+            lon.setText(savedInstanceState.getString(DATA_LON));
+            city.setText(savedInstanceState.getString(DATA_CITY));
+            country.setText(savedInstanceState.getString(DATA_COUNTRY));
+        }
+
+
     }
 
     private void doTakePhotoAction() {
@@ -190,11 +210,16 @@ public class CameraActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        orientation = newConfig.orientation;
-    }
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        int orientation = newConfig.orientation;
+//
+//        if (orientation == 1){
+//            setContentView(R.layout.activity_camera);
+//        }
+//
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -205,7 +230,7 @@ public class CameraActivity extends AppCompatActivity {
 
                 //Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
                 setPic(); //size control function
-                setIcon();
+
                 //photoImageView.setImageBitmap(bitmap);
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -218,6 +243,7 @@ public class CameraActivity extends AppCompatActivity {
                 //When took a picture, just one time It need Geo location that is taken picture location.
                 locationManager.requestSingleUpdate( "gps", locationListener, null );
             }
+
         }
         else if (resultCode == RESULT_CANCELED) {
             finish();
@@ -267,6 +293,7 @@ public class CameraActivity extends AppCompatActivity {
         bmOptions.inSampleSize = scaleFactor;
         bmOptions.inPurgeable = true;
 
+        //try this!!!!
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         //Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
         photoImageView.setImageBitmap(bitmap);
@@ -274,8 +301,8 @@ public class CameraActivity extends AppCompatActivity {
 
     private void setIcon(){
         //Get the dimensions of the View
-        int targetW = 70;//photoImageView.getDrawable().getIntrinsicWidth();
-        int targetH = 70; //.getDrawable().getIntrinsicHeight();
+        int targetW = 200;//photoImageView.getDrawable().getIntrinsicWidth();
+        int targetH = 200; //.getDrawable().getIntrinsicHeight();
 
 
         //Get the dimensions of the bitmap
@@ -309,7 +336,28 @@ public class CameraActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+//
+//        SharedPreferences.Editor ed = mPrefs.edit();
+//        ed.putString("Lat", String.valueOf(lat.getText()));
+//        ed.putString("lon", String.valueOf(lon.getText()));
+//        ed.putString("city", String.valueOf(city.getText()));
+//        ed.putString("country",String.valueOf(country.getText()));
+//        ed.putString("path", String.valueOf(mCurrentPhotoPath));
+//        ed.commit();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(DATA_LAT, String.valueOf(lat.getText()));
+        outState.putString(DATA_LON, String.valueOf(lon.getText()));
+        outState.putString(DATA_CITY, String.valueOf(city.getText()));
+        outState.putString(DATA_COUNTRY, String.valueOf(country.getText()));
+        outState.putString(DATA_PIC, mCurrentPhotoPath);
+    }
 }
-
-
-//test
