@@ -7,11 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.hanson.geoclick.Adapters.CityGalleryAdapter;
 import com.hanson.geoclick.Adapters.MyImageAdapter;
 import com.hanson.geoclick.Helper.DBHelper;
+import com.hanson.geoclick.Model.PictureItem;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 /*
 This activity represent a slideshow of a list of pictures, it is called by CityGalleryActivity
@@ -22,30 +27,34 @@ This key is used to track and uniquely identify a given page independent of its 
 
 public class ImageSlider extends AppCompatActivity {
 
+    ViewPager mViewPager;
+    DBHelper dbHelper;
+    MyImageAdapter adapterView;
+
+
+    ArrayList<PictureItem> PicList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_slider);
 
-        DBHelper dbHelper = new DBHelper(this, "Picture.db", null, 1);
-        Intent intent = getIntent();
+        dbHelper = new DBHelper(this, "Picture.db", null, 1);
+        PicList = dbHelper.pictures_SelectAll();
 
+        Intent intent = getIntent();
         int choise = intent.getIntExtra("idPic", 0);
 
-        ViewPager mViewPager = (ViewPager)findViewById(R.id.viewPageAndroid);
-        MyImageAdapter adapterView = new MyImageAdapter(this);
+        mViewPager = (ViewPager)findViewById(R.id.viewPageAndroid);
+        adapterView = new MyImageAdapter(this);
         mViewPager.setAdapter(adapterView);
-
-
-
-
-//        dbHelper.deleteRow(choise);   odd delete function
+        
 
 
 
 
         //choose the current item inside the image slider
-       mViewPager.setCurrentItem(choise);
+        mViewPager.setCurrentItem(choise);
 
         dbHelper.close();
 
@@ -66,15 +75,51 @@ public class ImageSlider extends AppCompatActivity {
         */
 
         if (id == R.id.delete) {
-            Toast.makeText(getApplicationContext(), "test delete" , Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "test delete" , Toast.LENGTH_SHORT).show();
+            deletePic();
             return true;
         }
         if (id == R.id.share) {
-            Toast.makeText(getApplicationContext(), "test share" , Toast.LENGTH_SHORT).show();
+            Intent shareIntent;
+            String shareTest = "Geoclick App. ";
+
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+
+
+            shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.setType("image/png");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My App");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareTest);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareTest + year);
+            startActivity(Intent.createChooser(shareIntent, "Share Via"));
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deletePic() {
+        PictureItem selectPic = (PictureItem) PicList.get(mViewPager.getCurrentItem());
+
+        dbHelper.deleteRow(selectPic.get_id());
+        //mViewPager.removeViewAt(mViewPager.getCurrentItem());
+
+        int pageIndex = mViewPager.getCurrentItem();
+        mViewPager.removeViewAt(mViewPager.getCurrentItem());
+        // You might want to choose what page to display, if the current page was "defunctPage".
+        if (pageIndex == adapterView.getCount())
+            pageIndex--;
+        mViewPager.setCurrentItem(pageIndex);
+
+        if (mViewPager.getChildCount() == 0) {
+            Toast.makeText(getApplicationContext(), "Doesn't have Picture", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+
+
     }
 
 }
