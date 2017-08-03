@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.graphics.Picture;
 import android.util.Log;
 
 import com.hanson.geoclick.Model.CityItem;
@@ -51,8 +52,19 @@ public class DBHelper extends SQLiteOpenHelper {
         p.bindString(7, mainImg);
         p.execute();
         db.close();
-        Log.d("Database :", "INSERT Complate!");
+        Log.d("Database :", "INSERT Complete!");
     }
+
+    public void deleteRow (int row) {
+
+
+        SQLiteDatabase db = getWritableDatabase();
+
+
+        db.execSQL("DELETE FROM Picture WHERE _id = " + row + ";");
+        db.close();
+    }
+
 
 
     //Query that return all pictures
