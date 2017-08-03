@@ -112,6 +112,7 @@ public class CameraActivity extends AppCompatActivity {
 
                         dbHelper.Picture_Insert(country.getText().toString(), city.getText().toString(),
                                 lat.getText().toString(),lon.getText().toString(), makeThumbnail, mCurrentPhotoPath);
+                        galleryAddPic();
                         Toast.makeText(v.getContext(), "Completed saving picture ", Toast.LENGTH_SHORT).show();
                     }
                     else
@@ -325,6 +326,15 @@ public class CameraActivity extends AppCompatActivity {
         icon = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 
     }
+
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
