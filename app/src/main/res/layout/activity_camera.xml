@@ -25,7 +25,6 @@
             android:id="@+id/imageView_takecam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:maxHeight="500dp"
             android:minHeight="200dp"
             android:scaleType="fitCenter"
@@ -36,8 +35,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_weight="1">
+            android:layout_marginTop="24dp">
 
 
             <GridLayout
