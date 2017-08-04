@@ -68,10 +68,10 @@ public class CameraActivity extends AppCompatActivity {
     private LocationListener locationListener;
 
     ImageView photoImageView;
-    TextView lat;
-    TextView lon;
-    TextView country;
-    TextView city;
+    String lat = "";
+    String lon = "";
+    String country = "";
+    String city = "";
     Button save;
 
 
@@ -89,10 +89,6 @@ public class CameraActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
 
             photoImageView = (ImageView) findViewById(R.id.imageView_takecam);
-            lat = (TextView) findViewById(R.id.textView_lat);
-            lon = (TextView) findViewById(R.id.textView_long);
-            city = (TextView) findViewById(R.id.textView_city);
-            country = (TextView) findViewById(R.id.textView_country);
             save = (Button) findViewById(R.id.button_save);
 
             save.setOnClickListener(new View.OnClickListener() {
@@ -103,8 +99,8 @@ public class CameraActivity extends AppCompatActivity {
                     //Connect with databases
                     DBHelper dbHelper = new DBHelper(getBaseContext(), "Picture.db", null, 1);
 
-                    if(photoImageView.getDrawable() != null && city.getText() != "" && country.getText() != "" &&
-                            lat.getText() != "" && lon.getText() != "")
+                    if(photoImageView.getDrawable() != null && city != "" && country != "" &&
+                            lat != "" && lon != "")
                     {
 //                        BitmapDrawable d = (BitmapDrawable)((ImageView) findViewById(R.id.imageView_takecam)).getDrawable();
 //                        Bitmap thBitmap = d.getBitmap();
@@ -112,8 +108,8 @@ public class CameraActivity extends AppCompatActivity {
                         byte[] makeThumbnail = imageHelper.getByteArrayFromBitmap(icon);
 
 
-                        dbHelper.Picture_Insert(country.getText().toString(), city.getText().toString(),
-                                lat.getText().toString(),lon.getText().toString(), makeThumbnail, mCurrentPhotoPath);
+                        dbHelper.Picture_Insert(country.toString(), city.toString(),
+                                lat.toString(),lon.toString(), makeThumbnail, mCurrentPhotoPath);
                         galleryAddPic();
                         Toast.makeText(v.getContext(), "Completed saving picture ", Toast.LENGTH_SHORT).show();
                     }
@@ -133,8 +129,8 @@ public class CameraActivity extends AppCompatActivity {
 
             @Override
             public void onLocationChanged(Location location) {
-                lat.setText(String.valueOf(location.getLatitude()));
-                lon.setText(String.valueOf(location.getLongitude()));
+                lat = String.valueOf(location.getLatitude());
+                lon = String.valueOf(location.getLongitude());
 
                 Geocoder geocoder;
                 List<Address> addresses;
@@ -148,11 +144,11 @@ public class CameraActivity extends AppCompatActivity {
                     if (!addresses.isEmpty()){
                         //Get city from address
                         //if (addresses.get(0).getLocality() != null)
-                            city.setText(addresses.get(0).getLocality());
+                            city = addresses.get(0).getLocality();
 //                        else
 //                            city.setText("Toronto");
                         //Get country from address
-                        country.setText(addresses.get(0).getCountryName());
+                        country = addresses.get(0).getCountryName();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -184,10 +180,10 @@ public class CameraActivity extends AppCompatActivity {
             mCurrentPhotoPath = savedInstanceState.getString(DATA_PIC);
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
             photoImageView.setImageBitmap(bitmap);
-            lat.setText(savedInstanceState.getString(DATA_LAT));
-            lon.setText(savedInstanceState.getString(DATA_LON));
-            city.setText(savedInstanceState.getString(DATA_CITY));
-            country.setText(savedInstanceState.getString(DATA_COUNTRY));
+            lat = savedInstanceState.getString(DATA_LAT);
+            lon = savedInstanceState.getString(DATA_LON);
+            city = savedInstanceState.getString(DATA_CITY);
+            country = savedInstanceState.getString(DATA_COUNTRY);
         }
 
 
@@ -345,10 +341,10 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(DATA_LAT, String.valueOf(lat.getText()));
-        outState.putString(DATA_LON, String.valueOf(lon.getText()));
-        outState.putString(DATA_CITY, String.valueOf(city.getText()));
-        outState.putString(DATA_COUNTRY, String.valueOf(country.getText()));
+        outState.putString(DATA_LAT, lat);
+        outState.putString(DATA_LON, lon);
+        outState.putString(DATA_CITY, city);
+        outState.putString(DATA_COUNTRY, country);
         outState.putString(DATA_PIC, mCurrentPhotoPath);
     }
 
