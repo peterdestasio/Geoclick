@@ -2,7 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/delete"
         android:title="Delete" />
-    <item android:id="@+id/share"
-        android:title="Share" />
+    <item android:id="@+id/facebook_menu"
+        android:title="Facebook" />
+    <item android:id="@+id/twitter_menu"
+        android:title="Twitter" />
+    <item android:id="@+id/instagram_menu"
+        android:title="Instagram" />
+    <item android:id="@+id/pinterest_menu"
+        android:title="Pinterest" />
 
 </menu>
