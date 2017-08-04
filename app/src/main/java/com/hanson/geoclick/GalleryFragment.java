@@ -2,6 +2,7 @@ package com.hanson.geoclick;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,7 +31,8 @@ public class GalleryFragment extends Fragment {
 
     ArrayList<CityItem> picList;
 
-
+    RecyclerView recyclerView;
+    GalleryAdapter adapter;
 
     public GalleryFragment() {
         // Required empty public constructor
@@ -47,6 +49,19 @@ public class GalleryFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_gallery, container, false);
 
+
+
+        recyclerView = (RecyclerView)view.findViewById(R.id.imagegallery);
+        recyclerView.setHasFixedSize(true);
+
+
+        return view;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
         DBHelper dbHelper = new DBHelper(this.getContext(), "Picture.db", null, 1);
 
         picList = dbHelper.selectPicGroupByCity();
@@ -57,27 +72,18 @@ public class GalleryFragment extends Fragment {
             cities.get(i).setImage_id(i);
         }
 
-        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.imagegallery);
-        recyclerView.setHasFixedSize(true);
         // use of a layout manager and the adapter - we used a grid Layout manager for pictures
         // 2 is the number of the columns
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity().getApplicationContext(),2);
         recyclerView.setLayoutManager(layoutManager);
 
         //set the customized adapter
-        GalleryAdapter adapter = new GalleryAdapter(getActivity().getApplicationContext(), cities);
+        adapter = new GalleryAdapter(getActivity().getApplicationContext(), cities);
         recyclerView.setAdapter(adapter);
 
         dbHelper.close();
 
-
-
-        return view;
     }
-
-
-
-
 }
 
 

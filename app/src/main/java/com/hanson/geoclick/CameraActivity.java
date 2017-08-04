@@ -16,6 +16,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -28,13 +29,14 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.android.gms.maps.model.LatLng;
 import com.hanson.geoclick.Helper.DBHelper;
 import com.hanson.geoclick.Helper.ImageHelper;
 
@@ -125,54 +127,57 @@ public class CameraActivity extends AppCompatActivity {
                 }
             });
 
+        //For Geo Location
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+
+            @Override
+            public void onLocationChanged(Location location) {
+                lat.setText(String.valueOf(location.getLatitude()));
+                lon.setText(String.valueOf(location.getLongitude()));
+
+                Geocoder geocoder;
+                List<Address> addresses;
+
+                //Get current Geo location
+                geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
+
+                try{
+                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+
+                    if (!addresses.isEmpty()){
+                        //Get city from address
+                        //if (addresses.get(0).getLocality() != null)
+                            city.setText(addresses.get(0).getLocality());
+//                        else
+//                            city.setText("Toronto");
+                        //Get country from address
+                        country.setText(addresses.get(0).getCountryName());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        };
+
         if (savedInstanceState == null)
         {
-            //For Geo Location
-            locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            locationListener = new LocationListener() {
-
-                @Override
-                public void onLocationChanged(Location location) {
-                    lat.setText(String.valueOf(location.getLatitude()));
-                    lon.setText(String.valueOf(location.getLongitude()));
-
-                    Geocoder geocoder;
-                    List<Address> addresses;
-
-                    //Get current Geo location
-                    geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
-
-                    try{
-                        addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-                        if (!addresses.isEmpty()){
-                            //Get city from address
-                            city.setText(addresses.get(0).getLocality());
-                            //Get country from address
-                            country.setText(addresses.get(0).getCountryName());
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                }
-
-                @Override
-                public void onProviderEnabled(String provider) {
-
-                }
-
-                @Override
-                public void onProviderDisabled(String provider) {
-                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivity(intent);
-                }
-            };
-
             doTakePhotoAction();
         }
         else {
@@ -211,16 +216,6 @@ public class CameraActivity extends AppCompatActivity {
 
     }
 
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        int orientation = newConfig.orientation;
-//
-//        if (orientation == 1){
-//            setContentView(R.layout.activity_camera);
-//        }
-//
-//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -348,20 +343,6 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-//
-//        SharedPreferences.Editor ed = mPrefs.edit();
-//        ed.putString("Lat", String.valueOf(lat.getText()));
-//        ed.putString("lon", String.valueOf(lon.getText()));
-//        ed.putString("city", String.valueOf(city.getText()));
-//        ed.putString("country",String.valueOf(country.getText()));
-//        ed.putString("path", String.valueOf(mCurrentPhotoPath));
-//        ed.commit();
-
-    }
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(DATA_LAT, String.valueOf(lat.getText()));
@@ -370,4 +351,7 @@ public class CameraActivity extends AppCompatActivity {
         outState.putString(DATA_COUNTRY, String.valueOf(country.getText()));
         outState.putString(DATA_PIC, mCurrentPhotoPath);
     }
+
+
 }
+

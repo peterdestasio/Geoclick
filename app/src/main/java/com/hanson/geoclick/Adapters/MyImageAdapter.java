@@ -92,7 +92,9 @@ public class MyImageAdapter extends PagerAdapter {
     {
         //i = choise;
         ImageView mImageView = new ImageView(mContext);
-        mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        //ScaleType change Cuz CENTER_CROP is just crop the pic -MIJU
+        //mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        mImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
        // mImageView.setImageResource(sliderImagesId[i]);
         //mImageView.setImageBitmap(imageHelper.getBitmapFromByteArray(pictureItems.get(i).get_thumbnail()));
         mImageView.setImageURI(Uri.parse(pictureItems.get(i).get_mainImg()));

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class ImageSlider extends AppCompatActivity {
     DBHelper dbHelper;
     MyImageAdapter adapterView;
 
-
+    String choiseCity;
     ArrayList<PictureItem> PicList;
 
     @Override
@@ -41,18 +42,23 @@ public class ImageSlider extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_slider);
 
-        dbHelper = new DBHelper(this, "Picture.db", null, 1);
-        PicList = dbHelper.pictures_SelectAll();
-
         Intent intent = getIntent();
         int choise = intent.getIntExtra("idPic", 0);
+        choiseCity = intent.getStringExtra("cityChosen");
+
+        dbHelper = new DBHelper(this, "Picture.db", null, 1);
+        PicList = dbHelper.selectPicFromCity(choiseCity);
+
+        for (int i=0; i < PicList.size(); i++)
+        {
+            Log.d("Picture List : ", String.valueOf(PicList.get(i).get_id() + ", " + PicList.get(i).get_city()));
+        }
+
+
 
         mViewPager = (ViewPager)findViewById(R.id.viewPageAndroid);
         adapterView = new MyImageAdapter(this);
         mViewPager.setAdapter(adapterView);
-        
-
-
 
 
         //choose the current item inside the image slider
@@ -116,26 +122,35 @@ public class ImageSlider extends AppCompatActivity {
     }
 
     private void deletePic() {
+
         PictureItem selectPic = (PictureItem) PicList.get(mViewPager.getCurrentItem());
+
+        Log.d("DELETE SELETECT PIC : ", String.valueOf(selectPic.get_id()) + String.valueOf(selectPic.get_city()));
 
         dbHelper.deleteRow(selectPic.get_id());
         //mViewPager.removeViewAt(mViewPager.getCurrentItem());
 
         int pageIndex = mViewPager.getCurrentItem();
-        mViewPager.removeViewAt(mViewPager.getCurrentItem());
+        //mViewPager.removeViewAt(mViewPager.getCurrentItem());
         // You might want to choose what page to display, if the current page was "defunctPage".
         adapterView = new MyImageAdapter(this);
         mViewPager.setAdapter(adapterView);
-        if (pageIndex == adapterView.getCount())
-            pageIndex--;
-        mViewPager.setCurrentItem(pageIndex);
+//        if (pageIndex == adapterView.getCount())
+//            pageIndex--;
+//        mViewPager.setCurrentItem(pageIndex);
 
         if (mViewPager.getChildCount() == 0) {
-            Toast.makeText(getApplicationContext(), "Doesn't have Picture", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Doesn't have Picture in" + choiseCity, Toast.LENGTH_SHORT).show();
             finish();
         }
-
-
+        else if(pageIndex == adapterView.getCount()){
+            pageIndex--;
+            mViewPager.setCurrentItem(pageIndex);
+        }
+        else {
+            pageIndex++;
+            mViewPager.setCurrentItem(pageIndex);
+        }
 
     }
 

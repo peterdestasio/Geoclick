@@ -22,6 +22,7 @@ public class CItyGalleryActivity extends AppCompatActivity {
 
     DBHelper dbHelper = new DBHelper(this, "Picture.db", null, 1);
     ArrayList<PictureItem> picCities;
+    String city;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,20 +30,32 @@ public class CItyGalleryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_city_gallery);
 
         Intent intent = getIntent();
-        String city = intent.getStringExtra("cityChoise");
+        city = intent.getStringExtra("cityChoise");
 
-        picCities = dbHelper.selectPicFromCity(city);
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.imagegallery);
-        recyclerView.setHasFixedSize(true);
-
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
-        recyclerView.setLayoutManager(layoutManager);
-
-        CityGalleryAdapter adapter = new CityGalleryAdapter(getApplicationContext(), picCities);
-        recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        picCities = dbHelper.selectPicFromCity(city);
+
+       if(picCities.size() == 0){
+            finish();
+        }
+        else {
 
 
+            RecyclerView recyclerView = (RecyclerView)findViewById(R.id.imagegallery);
+            recyclerView.setHasFixedSize(true);
+
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
+            recyclerView.setLayoutManager(layoutManager);
+
+            CityGalleryAdapter adapter = new CityGalleryAdapter(getApplicationContext(), picCities);
+            recyclerView.setAdapter(adapter);
+        }
+
+
+    }
 }
