@@ -2,7 +2,6 @@ package com.hanson.geoclick;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -82,20 +81,34 @@ public class ImageSlider extends AppCompatActivity {
             deletePic();
             return true;
         }
-        if (id == R.id.instagram_menu) {
-              SharingToSocialMedia("com.instagram.android");
-               return true;
-        }
-        if (id == R.id.facebook_menu) {
-            SharingToSocialMedia("com.facebook.katana");
-            return true;
-        }
-        if (id == R.id.pinterest_menu) {
-            SharingToSocialMedia("com.pinterest");
-            return true;
-        }
-        if (id == R.id.twitter_menu) {
-            SharingToSocialMedia("com.twitter.android");
+        if (id == R.id.share) {
+//            Intent shareIntent;
+//            String shareTest = "Geoclick App. ";
+
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+
+
+//            shareIntent = new Intent(Intent.ACTION_SEND);
+//            shareIntent.setType("text/plain");
+//            shareIntent.setType("image/png");
+//            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My App");
+//            shareIntent.putExtra(Intent.EXTRA_TEXT, shareTest);
+//            shareIntent.putExtra(Intent.EXTRA_TEXT, shareTest + year);
+//            startActivity(Intent.createChooser(shareIntent, "Share Via"));
+            PictureItem selectPic = (PictureItem) PicList.get(mViewPager.getCurrentItem());
+            String file = selectPic.get_mainImg();
+            String geoShare = selectPic.get_country() + " " + selectPic.get_city() +" via Geoclick® "+ year;
+
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(file)));
+            shareIntent.setType("image/png");
+            shareIntent.putExtra(Intent.EXTRA_TEXT,
+                    geoShare);
+            startActivity(Intent.createChooser(shareIntent, "Share Image"));
+
             return true;
         }
 
@@ -126,61 +139,4 @@ public class ImageSlider extends AppCompatActivity {
 
     }
 
-    public void SharingToSocialMedia(String application) {
-
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        PictureItem selectPic = (PictureItem) PicList.get(mViewPager.getCurrentItem());
-        String file = selectPic.get_mainImg();
-
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(file)));
-
-
-
-        boolean installed = checkAppInstall(application);
-        if (installed) {
-            String geoShare = selectPic.get_country() + " " + selectPic.get_city() +" via Geoclick® "+ year;
-
-            intent.setPackage(application);
-            startActivity(intent);
-        } else {
-            Toast.makeText(getApplicationContext(),
-                    "Install application first", Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-
-    private boolean checkAppInstall(String uri) {
-        PackageManager pm = getPackageManager();
-        try {
-            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-        }
-
-        return false;
-    }
-
 }
-
-
-
-//            Calendar calendar = Calendar.getInstance();
-//            int year = calendar.get(Calendar.YEAR);
-//
-//            PictureItem selectPic = (PictureItem) PicList.get(mViewPager.getCurrentItem());
-//            String file = selectPic.get_mainImg();
-//            String geoShare = selectPic.get_country() + " " + selectPic.get_city() +" via Geoclick® "+ year;
-//
-//
-//            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//            shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(file)));
-//            shareIntent.setType("image/png");
-//            shareIntent.setPackage("com.whatsapp");
-//            shareIntent.putExtra(Intent.EXTRA_TEXT, geoShare);
-//            startActivity(Intent.createChooser(shareIntent, "Share Image"));
