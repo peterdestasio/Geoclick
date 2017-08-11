@@ -68,11 +68,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
         DBHelper dbHelper = new DBHelper(this.getContext(), "Picture.db", null, 1);
         PicList = dbHelper.pictures_SelectAll();
 
-       for (int i=0; i < PicList.size(); i++)
-       {
-           Log.d("Picture List : ", String.valueOf(PicList.get(i).get_id() + ", " + PicList.get(i).get_latitude()));
-       }
-
        dbHelper.close();
 
     }
@@ -85,14 +80,11 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
         {
             LatLng place = new LatLng(Double.valueOf(PicList.get(i).get_latitude()),Double.valueOf(PicList.get(i).get_longitude()));
 
-            //Add by Miju Jang - for making small size icon
+            //make small size icon
             Bitmap smallMarker = Bitmap.createScaledBitmap(imgeHelper.getBitmapFromByteArray(PicList.get(i).get_thumbnail()), 70, 70, false);
             googleMap.addMarker(new MarkerOptions().position(place)
                     .title(PicList.get(i).get_city())).setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
 
-
-            ///try!!!
-            //bitmapdescriptiorfacory.fromFile(PicList.get(i).get_mainImg()
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(place));
 
             // Set a listener for marker click.
@@ -125,23 +117,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback, Goo
     public boolean onMarkerClick(final Marker marker) {
 
         // Retrieve the data from the marker.
-        Integer clickCount = (Integer) marker.getTag();
-        Log.e("click","clack");
-
-
-        /*
-        // Check if a click count was set, then display the click count.
-        if (clickCount != null) {
-            clickCount = clickCount + 1;
-            marker.setTag(clickCount);
-            Toast.makeText(getContext(),
-                    marker.getTitle() +
-                            " has been clicked " + clickCount + " times.",
-                    Toast.LENGTH_SHORT).show();
-
-
-        }
-        */
 
         // Return false to indicate that we have not consumed the event and that we wish
         // for the default behavior to occur (which is for the camera to move such that the

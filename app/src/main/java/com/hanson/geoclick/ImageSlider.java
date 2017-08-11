@@ -87,7 +87,7 @@ public class ImageSlider extends AppCompatActivity {
         if (id == R.id.delete) {
 
             //Create an Alert Dialog to make a decision of delete or not a picture
-            new AlertDialog.Builder(this).setMessage("Are You Sure You Want to Delete this picture?")
+            new AlertDialog.Builder(this).setMessage("Are you sure you want to delete this picture?")
 
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener()
                     {

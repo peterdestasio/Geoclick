@@ -54,51 +54,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cell_layout, viewGroup, false);
         return new ViewHolder(view);
     }
-    /*
-    //TO FIXXXX ANDREIIII!!!!! WTF???
-    @Override
-    public void onBindViewHolder(GalleryAdapter.ViewHolder viewHolder, final int i) {
-        viewHolder.title.setText(galleryList.get(i).getImage_title());
-        viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        //viewHolder.img.setImageResource(Integer.parseInt((galleryList.get(i).getImage_ID())));
-        viewHolder.img.setImageResource((galleryList.get(i).getImage_ID()));
-
-
-        viewHolder.img.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-//                Toast.makeText(context,"Title is: " + galleryList.get(i).getImage_title(),Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, CItyGalleryActivity.class);
-                context.startActivity(intent);
-                return false;
-            }
-        });
-
-//         sharing to contacts if double click
-        viewHolder.img.setOnClickListener(new DoubleClickListener() {
-
-            @Override
-            public void onSingleClick(View v) {
-
-            }
-
-            @Override
-            public void onDoubleClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-
-                Toast.makeText(context,"Double Click!",Toast.LENGTH_SHORT).show();
-                shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.setType("image/png");
-                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My App");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, shareTest + year);
-                context.startActivity(Intent.createChooser(shareIntent,"Share Via"));
-
-            }
-        });
-    }
-
-    */
 
     /*
      * bind the ViewHolder with the data from our ArrayList of CityItem

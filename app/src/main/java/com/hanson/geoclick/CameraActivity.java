@@ -115,7 +115,7 @@ public class CameraActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        Toast.makeText(v.getContext(), "Please, pick your picture!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "Sorry, we couldn't retrieve your location!", Toast.LENGTH_SHORT).show();
                         return;
                     }
 

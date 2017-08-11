@@ -56,6 +56,8 @@ public class CItyGalleryActivity extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
         }
 
+        dbHelper.close();
+
 
     }
 }
