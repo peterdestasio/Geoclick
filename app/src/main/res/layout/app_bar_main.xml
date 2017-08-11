@@ -18,7 +18,8 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:subtitleTextColor="@color/colorAccent_Mint"
-            app:titleTextColor="@color/colorAccent" />
+            app:titleTextColor="@color/colorAccent"
+            android:onClick="DialogBox"/>
 
     </android.support.design.widget.AppBarLayout>
 

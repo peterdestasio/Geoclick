@@ -1,9 +1,11 @@
 package com.hanson.geoclick;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -83,8 +85,27 @@ public class ImageSlider extends AppCompatActivity {
         */
 
         if (id == R.id.delete) {
-            //Toast.makeText(getApplicationContext(), "test delete" , Toast.LENGTH_SHORT).show();
-            deletePic();
+
+            //Create an Alert Dialog to make a decision of delete or not a picture
+            new AlertDialog.Builder(this).setMessage("Are You Sure You Want to Delete this picture?")
+
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            deletePic();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            dialog.cancel();
+                        }
+                    }).show();
+
             return true;
         }
         if (id == R.id.share) {
@@ -140,7 +161,7 @@ public class ImageSlider extends AppCompatActivity {
 //        mViewPager.setCurrentItem(pageIndex);
 
         if (mViewPager.getChildCount() == 0) {
-            Toast.makeText(getApplicationContext(), "Doesn't have Picture in" + choiseCity, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Doesn't have Picture in " + choiseCity, Toast.LENGTH_SHORT).show();
             finish();
         }
         else if(pageIndex == adapterView.getCount()){
