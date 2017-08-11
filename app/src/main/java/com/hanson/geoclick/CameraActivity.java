@@ -111,8 +111,10 @@ public class CameraActivity extends AppCompatActivity {
                         dbHelper.Picture_Insert(country.toString(), city.toString(),
                                 lat.toString(),lon.toString(), makeThumbnail, mCurrentPhotoPath);
                         galleryAddPic();
-                        Toast.makeText(v.getContext(), "Completed saving picture ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "Saving picture completed", Toast.LENGTH_SHORT).show();
                     }
+
+
                     else
                     {
                         Toast.makeText(v.getContext(), "Sorry, we couldn't retrieve your location!", Toast.LENGTH_SHORT).show();
@@ -132,11 +134,14 @@ public class CameraActivity extends AppCompatActivity {
                 lat = String.valueOf(location.getLatitude());
                 lon = String.valueOf(location.getLongitude());
 
+
                 Geocoder geocoder;
                 List<Address> addresses;
 
                 //Get current Geo location
                 geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
+
+                //location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
                 try{
                     addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
@@ -145,6 +150,10 @@ public class CameraActivity extends AppCompatActivity {
                         //Get city from address
                         //if (addresses.get(0).getLocality() != null)
                             city = addresses.get(0).getLocality();
+                        if (city == null){
+                            city = addresses.get(0).getSubLocality();
+                        }
+
 //                        else
 //                            city.setText("Toronto");
                         //Get country from address

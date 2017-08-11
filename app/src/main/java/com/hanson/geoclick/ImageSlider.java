@@ -3,6 +3,8 @@ package com.hanson.geoclick;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -45,6 +47,9 @@ public class ImageSlider extends AppCompatActivity {
         setContentView(R.layout.activity_image_slider);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#00C4CD")));
+
+
 
 
         Intent intent = getIntent();
@@ -82,7 +87,6 @@ public class ImageSlider extends AppCompatActivity {
         //undestand if the arrow on the left is clicked
         switch (item.getItemId()) {
             case android.R.id.home:
-                // NavUtils.navigateUpFromSameTask(this);
                 finish();
                 return true;
         }
