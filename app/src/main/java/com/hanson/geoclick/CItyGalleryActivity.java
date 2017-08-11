@@ -1,10 +1,14 @@
 package com.hanson.geoclick;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.hanson.geoclick.Adapters.CityGalleryAdapter;
 import com.hanson.geoclick.Helper.DBHelper;
@@ -24,6 +28,8 @@ public class CItyGalleryActivity extends AppCompatActivity {
     ArrayList<PictureItem> picCities;
     String city;
 
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +37,9 @@ public class CItyGalleryActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         city = intent.getStringExtra("cityChoise");
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
     }
@@ -60,4 +69,19 @@ public class CItyGalleryActivity extends AppCompatActivity {
 
 
     }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // NavUtils.navigateUpFromSameTask(this);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

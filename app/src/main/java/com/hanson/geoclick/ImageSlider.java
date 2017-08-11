@@ -44,19 +44,15 @@ public class ImageSlider extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_slider);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         Intent intent = getIntent();
         int choise = intent.getIntExtra("idPic", 0);
         choiseCity = intent.getStringExtra("cityChosen");
 
         dbHelper = new DBHelper(this, "Picture.db", null, 1);
         PicList = dbHelper.selectPicFromCity(choiseCity);
-
-        for (int i=0; i < PicList.size(); i++)
-        {
-            Log.d("Picture List : ", String.valueOf(PicList.get(i).get_id() + ", " + PicList.get(i).get_city()));
-        }
-
-
 
         mViewPager = (ViewPager)findViewById(R.id.viewPageAndroid);
         adapterView = new MyImageAdapter(this);
@@ -83,6 +79,13 @@ public class ImageSlider extends AppCompatActivity {
         /*
              Delete and Share menu buttons
         */
+        //undestand if the arrow on the left is clicked
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // NavUtils.navigateUpFromSameTask(this);
+                finish();
+                return true;
+        }
 
         if (id == R.id.delete) {
 
