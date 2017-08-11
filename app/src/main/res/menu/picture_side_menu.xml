@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/delete"
+    <item
+        android:id="@+id/delete"
+        android:icon="@android:drawable/ic_menu_delete"
         android:title="Delete" />
-    <item android:id="@+id/share"
+    <item
+        android:id="@+id/share"
+        android:icon="@android:drawable/ic_menu_share"
         android:title="Share" />
 
 </menu>

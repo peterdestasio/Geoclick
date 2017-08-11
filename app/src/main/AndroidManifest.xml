@@ -51,7 +51,7 @@
         </provider>
 
         <activity android:name=".Adapters.MyImageAdapter" />
-        <activity android:name=".ImageSlider" />
+        <activity android:name=".ImageSlider" android:theme="@style/MyAppActionBarTheme" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">

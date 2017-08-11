@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
 import com.hanson.geoclick.Adapters.CityGalleryAdapter;
@@ -38,8 +41,17 @@ public class CItyGalleryActivity extends AppCompatActivity {
         Intent intent = getIntent();
         city = intent.getStringExtra("cityChoise");
 
+        //Show backbutton
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //Set page title color
+        Spannable text = new SpannableString(actionBar.getTitle());
+        text.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorAccent)), 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        actionBar.setTitle(text);
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

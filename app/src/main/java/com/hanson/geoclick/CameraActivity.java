@@ -29,9 +29,13 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +58,7 @@ public class CameraActivity extends AppCompatActivity {
     private static final String DATA_CITY = "city";
     private static final String DATA_COUNTRY = "country";
     private static final String DATA_PIC = "picture";
+    private static final String DATA_ISLOADING = "isLoading";
 
     //helper
     ImageHelper imageHelper;
@@ -73,7 +78,8 @@ public class CameraActivity extends AppCompatActivity {
     String country = "";
     String city = "";
     Button save;
-
+    ProgressBar load;
+    boolean isLoading = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +93,11 @@ public class CameraActivity extends AppCompatActivity {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
+
+            //Set page title color
+            Spannable text = new SpannableString(actionBar.getTitle());
+            text.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorAccent)), 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            actionBar.setTitle(text);
 
             photoImageView = (ImageView) findViewById(R.id.imageView_takecam);
             save = (Button) findViewById(R.id.button_save);
@@ -124,6 +135,8 @@ public class CameraActivity extends AppCompatActivity {
                     finish();
                 }
             });
+            load = (ProgressBar) findViewById(R.id.progressBar_loaction);
+
 
         //For Geo Location
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -131,6 +144,7 @@ public class CameraActivity extends AppCompatActivity {
 
             @Override
             public void onLocationChanged(Location location) {
+
                 lat = String.valueOf(location.getLatitude());
                 lon = String.valueOf(location.getLongitude());
 
@@ -162,6 +176,10 @@ public class CameraActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                isLoading = false;
+                load.setVisibility(View.GONE);
+                save.setEnabled(true);
+
             }
 
             @Override
@@ -193,6 +211,16 @@ public class CameraActivity extends AppCompatActivity {
             lon = savedInstanceState.getString(DATA_LON);
             city = savedInstanceState.getString(DATA_CITY);
             country = savedInstanceState.getString(DATA_COUNTRY);
+            isLoading = savedInstanceState.getBoolean(DATA_ISLOADING);
+            if (isLoading){
+                load.setVisibility(View.VISIBLE);
+                save.setEnabled(false);
+            }
+            else {
+                load.setVisibility(View.GONE);
+                save.setEnabled(true);
+            }
+
         }
 
 
@@ -355,6 +383,7 @@ public class CameraActivity extends AppCompatActivity {
         outState.putString(DATA_CITY, city);
         outState.putString(DATA_COUNTRY, country);
         outState.putString(DATA_PIC, mCurrentPhotoPath);
+        outState.putBoolean(DATA_ISLOADING, isLoading);
     }
 
 
