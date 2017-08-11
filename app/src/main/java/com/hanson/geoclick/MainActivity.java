@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
+import com.hanson.geoclick.Eula.SimpleEula;
 
 import java.io.IOException;
 
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //show the eula at the first execution
+        new SimpleEula(this).show();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

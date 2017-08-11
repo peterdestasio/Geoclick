@@ -11,4 +11,31 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="eula">Geoclick App End User License Agreement
+This End User License Agreement (“Agreement”) is between you and Geoclick and governs use of this app made available through the Google Play App Store. By installing the Geoclick App, you agree to be bound by this Agreement and understand that there is no tolerance for objectionable content. If you do not agree with the terms and conditions of this Agreement, you are not entitled to use the Geoclick App.
+
+1. GRANT OF LICENSE.
+The SOFTWARE PRODUCT is licensed as follows:
+(a) Installation and Use.
+Pierluigi De Stasio grants you the right to install and use copies of the Geoclick App on your Android Device running a validly licensed copy of the operating system for which the App was designed.
+2. DESCRIPTION OF OTHER RIGHTS AND LIMITATIONS.
+(a) Maintenance of Copyright Notices.
+You must not remove or alter any copyright notices on any and all copies of the Geoclick App
+(b) Distribution.
+You may not distribute registered copies of the Geoclick App to third parties.
+(c) Prohibition on Reverse Engineering, Decompilation, and Disassembly.
+You may not reverse engineer, decompile, or disassemble the Geoclick App, except and only to the extent that such activity is expressly permitted by applicable law notwithstanding this limitation. .
+(f) Compliance with Applicable Laws.
+You must comply with all applicable laws regarding use of the SOFTWARE PRODUCT.
+3. TERMINATION
+Without prejudice to any other rights, Pierluigi De Stasio may terminate this EULA if you fail to comply with the terms and conditions of this EULA. In such event, you must destroy all copies of the Geoclick App  in your possession.
+4. NO WARRANTIES
+Pierluigi De Stasio expressly disclaims any warranty for the Geoclick App. The Geoclick App is provided \'As Is\' without any express or implied warranty of any kind, including but not limited to any warranties of merchantability, noninfringement, or fitness of a particular purpose. Pierluigi De Stasio does not warrant or assume responsibility for the accuracy or completeness of any information, text, graphics, links or other items contained within the Geoclick App. Pierluigi De Stasio makes no warranties respecting any harm that may be caused by the transmission of a computer virus, worm, time bomb, logic bomb, or other such computer program. Pierluigi De Stasio further expressly disclaims any warranty or representation to Authorized Users or to any third party.
+5. LIMITATION OF LIABILITY
+In no event shall Pierluigi De Stasio be liable for any damages (including, without limitation, lost profits, business interruption, or lost information) rising out of \'Authorized Users\' use of or inability to use the Geoclick App, even if Pierluigi De Stasio has been advised of the possibility of such damages. In no event will Pierluigi De Stasio be liable for loss of data or for indirect, special, incidental, consequential (including lost profit), or other damages based in contract, tort or otherwise. Pierluigi De Stasio shall have no liability with respect to the content of the Geoclick App or any part thereof, including but not limited to errors or omissions contained therein, libel, infringements of rights of publicity, privacy, trademark rights, business interruption, personal injury, loss of privacy, moral rights or the disclosure of confidential information.
+ </string>
+
+
 </resources>

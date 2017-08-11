@@ -69,7 +69,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         viewHolder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(context,cityList.get(i).getName(),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, CItyGalleryActivity.class);
                 intent.putExtra("cityChoise",cityList.get(i).getName().toString());
                 context.startActivity(intent);
