@@ -141,11 +141,6 @@ public class MainActivity extends AppCompatActivity
             InformationFragment informationFragment = new InformationFragment();
             manager.beginTransaction().replace(R.id.root_layout, informationFragment, informationFragment.getTag()).commit();
         }
-//        else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

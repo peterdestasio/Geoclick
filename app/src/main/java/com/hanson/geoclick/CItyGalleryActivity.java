@@ -51,12 +51,6 @@ public class CItyGalleryActivity extends AppCompatActivity {
         text.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorAccent)), 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         actionBar.setTitle(text);
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        /*
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        */
 
 
     }

@@ -50,8 +50,6 @@ public class ImageSlider extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_slider);
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#00C4CD")));
 
         //Show backbutton
         ActionBar actionBar = getSupportActionBar();
@@ -62,8 +60,6 @@ public class ImageSlider extends AppCompatActivity {
         Spannable text = new SpannableString(actionBar.getTitle());
         text.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorAccent)), 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         actionBar.setTitle(text);
-
-
 
 
         Intent intent = getIntent();
@@ -129,21 +125,13 @@ public class ImageSlider extends AppCompatActivity {
 
             return true;
         }
+
+        //share picture throug shareIntent
         if (id == R.id.share) {
-//            Intent shareIntent;
-//            String shareTest = "Geoclick App. ";
 
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
 
-
-//            shareIntent = new Intent(Intent.ACTION_SEND);
-//            shareIntent.setType("text/plain");
-//            shareIntent.setType("image/png");
-//            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My App");
-//            shareIntent.putExtra(Intent.EXTRA_TEXT, shareTest);
-//            shareIntent.putExtra(Intent.EXTRA_TEXT, shareTest + year);
-//            startActivity(Intent.createChooser(shareIntent, "Share Via"));
             PictureItem selectPic = (PictureItem) PicList.get(mViewPager.getCurrentItem());
             String file = selectPic.get_mainImg();
             String geoShare = selectPic.get_country() + " " + selectPic.get_city() +" via Geoclick® "+ year;
@@ -163,23 +151,19 @@ public class ImageSlider extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //delete selected picture
     private void deletePic() {
 
         PictureItem selectPic = (PictureItem) PicList.get(mViewPager.getCurrentItem());
 
-        Log.d("DELETE SELETECT PIC : ", String.valueOf(selectPic.get_id()) + String.valueOf(selectPic.get_city()));
 
         dbHelper.deleteRow(selectPic.get_id());
-        //mViewPager.removeViewAt(mViewPager.getCurrentItem());
 
         int pageIndex = mViewPager.getCurrentItem();
-        //mViewPager.removeViewAt(mViewPager.getCurrentItem());
+
         // You might want to choose what page to display, if the current page was "defunctPage".
         adapterView = new MyImageAdapter(this);
         mViewPager.setAdapter(adapterView);
-//        if (pageIndex == adapterView.getCount())
-//            pageIndex--;
-//        mViewPager.setCurrentItem(pageIndex);
 
         if (mViewPager.getChildCount() == 0) {
             Toast.makeText(getApplicationContext(), "Doesn't have Picture in " + choiseCity, Toast.LENGTH_SHORT).show();

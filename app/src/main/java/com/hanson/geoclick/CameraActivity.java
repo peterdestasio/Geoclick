@@ -113,8 +113,6 @@ public class CameraActivity extends AppCompatActivity {
                     if(photoImageView.getDrawable() != null && city != null && !city.isEmpty() && country != null && !country.isEmpty() &&
                             lat != null && !lat.isEmpty() && lon != null && !lon.isEmpty())
                     {
-//                        BitmapDrawable d = (BitmapDrawable)((ImageView) findViewById(R.id.imageView_takecam)).getDrawable();
-//                        Bitmap thBitmap = d.getBitmap();
                         setIcon();
                         byte[] makeThumbnail = imageHelper.getByteArrayFromBitmap(icon);
 
