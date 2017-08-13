@@ -110,8 +110,8 @@ public class CameraActivity extends AppCompatActivity {
                     //Connect with databases
                     DBHelper dbHelper = new DBHelper(getBaseContext(), "Picture.db", null, 1);
 
-                    if(photoImageView.getDrawable() != null && city != "" && country != "" &&
-                            lat != "" && lon != "")
+                    if(photoImageView.getDrawable() != null && city != null && !city.isEmpty() && country != null && !country.isEmpty() &&
+                            lat != null && !lat.isEmpty() && lon != null && !lon.isEmpty())
                     {
 //                        BitmapDrawable d = (BitmapDrawable)((ImageView) findViewById(R.id.imageView_takecam)).getDrawable();
 //                        Bitmap thBitmap = d.getBitmap();
