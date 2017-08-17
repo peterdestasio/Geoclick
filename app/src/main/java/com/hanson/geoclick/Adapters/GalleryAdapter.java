@@ -37,8 +37,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     private ImageHelper imageHelper = new ImageHelper();
 
     private Context context;
-    Intent shareIntent;
-    String shareTest = "Geoclick App. ";
 
     //constructor
     public GalleryAdapter(Context context, ArrayList<CityItem> cityList){

@@ -23,7 +23,7 @@ This Fragment use a RecycleView to create our Android gallery.
 
 RecyclerView is a modern, properly planned and more efficient improvement on the ListView.
 
-This is a handy view that acts very much like a ListView but with the advantage of allowing us to scroll quickly through large data sets. It does this by only loading the images that are currently in view at any given time. This means we can load more images without the app becoming very slow. 
+This is a handy view that acts very much like a ListView but with the advantage of allowing us to scroll quickly through large data sets. It does this by only loading the images that are currently in view at any given time. This means we can load more images without the app becoming very slow.
 
  */
 

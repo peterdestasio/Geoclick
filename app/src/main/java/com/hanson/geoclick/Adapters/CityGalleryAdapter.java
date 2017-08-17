@@ -57,7 +57,6 @@ public class CityGalleryAdapter extends RecyclerView.Adapter<CityGalleryAdapter.
             public void onClick(View v) {
                 Intent intent = new Intent(context, ImageSlider.class);
                 intent.putExtra("idPic",i); //send the id of the image clicked
-                Log.e("Chouse", String.valueOf(i));
                 intent.putExtra("cityChosen", pictureItems.get(i).get_city()); //send the city chosen
                 context.startActivity(intent);
             }
