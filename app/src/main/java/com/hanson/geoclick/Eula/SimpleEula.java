@@ -70,6 +70,7 @@ public class SimpleEula {
                         public void onClick(DialogInterface dialog, int which) {
                             // Close the activity as they have declined the EULA
                             mActivity.finish();
+
                         }
 
                     });
