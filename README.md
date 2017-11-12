@@ -4,7 +4,7 @@ An Android application that stores and shows you a gallery of images on a map ba
 Cambrian @ Hanson College Project
 
 <p align="center">
-<img src=https://github.com/peterdestasio/Geoclick/blob/30ac18ad003059efbe401117574a8b4f2c8709eb/GeoClickPresentation.gif align="center">
+<img src=https://github.com/peterdestasio/Geoclick/blob/30ac18ad003059efbe401117574a8b4f2c8709eb/GeoClickPresentation.gif>
 </p>
 
 ## Getting Started
